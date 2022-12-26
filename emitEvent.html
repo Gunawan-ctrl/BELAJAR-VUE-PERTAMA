@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Belajar Emit Event ke Parent</title>
+</head>
+<body>
+
+  <div id="vueApp">
+    <h3>Belajar Emit Event ke Parent</h3>
+    <blog-post 
+      title="My journey with vue"
+      desc="this is my first journey"
+      @read="read"></blog-post>
+    <blog-post 
+      title="My journey with React"
+      desc="this is my first React"
+      @read="read"></blog-post>
+
+      <p>Total selesai : {{total}}</p>
+  </div>
+
+
+  <script type="text/x-template" id="blog-template">
+    <h3>{{title}} :</h3>
+    <p>{{desc}}</p>
+    <button @click="$emit('read', 10)">selesai</button>
+  </script>
+
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <script>
+    const app = Vue.createApp({
+      data() {
+        return {
+          total: 0
+        }
+      },
+      methods: {
+        read(num) {
+          this.total = this.total + num
+        }
+      }
+    })
+    
+    app.component('blog-post', {
+      props: ['title', 'desc'],
+      template: '#blog-template'
+    })
+
+    app.mount('#vueApp')
+  </script>
+</body>
+</html>
